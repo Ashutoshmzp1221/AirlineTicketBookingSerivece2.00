@@ -21,14 +21,29 @@ class BookingRepository {
             );
         }
     }
-    
+    async get(bookingId) {
+        try {
+          const booking = await Booking.findByPk(bookingId);
+          return booking;
+        } catch (error) {
+          if (error.name === 'SequelizeValidationError') {
+            throw new ValidationError(error);
+          }
+          throw new AppError(
+            'RepositoryError',
+            'Cannot fetch Booking',
+            'There was an issue fetching the booking. Please try again later.',
+            StatusCodes.INTERNAL_SERVER_ERROR
+          );
+        }
+    }
+      
     async update(bookingId, data) {
         try {
             const booking = await Booking.findByPk(bookingId);
             if(data.status) {
                 booking.status = data.status;
             }
-
             await booking.save();
             return booking;
         } catch (error) {
