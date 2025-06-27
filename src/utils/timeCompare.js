@@ -1,5 +1,3 @@
-
-
 const compareTime = (departureTime, cancelationTime) => {
     if(departureTime - cancelationTime > 2) {
         return true;
