@@ -5,7 +5,6 @@ const bookingService = new BookingService();
 
 const create = async (req, res) => {
     try {
-        console.log(req.body)
         const response = await bookingService.createBooking(req.body);
         return res.status(StatusCodes.OK).json({
             message : 'Successfully completed the booking',
@@ -14,7 +13,7 @@ const create = async (req, res) => {
             data : response
         });
     } catch (error) {
-        return res.status(error.statusCodes).json({
+        return res.status(error.statusCodes || 500).json({
             message : error.message,
             success : false,
             err : error.explanation,
