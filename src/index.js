@@ -8,7 +8,10 @@ const db = require('./models/index')
 const setupAndStartServer = async() => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended : true}));
-    app.use('/api',apiRoutes);
+    app.use('/bookingService/api',apiRoutes);
+    app.get('/bookingService/api/v1/home', (req, res) => {
+      return res.json({data: 'htting booking api'})
+    })
     await createChannel();
     app.listen(PORT, () => {
       // if(process.env.DB_SYNC) {
